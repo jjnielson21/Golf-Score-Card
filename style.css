@@ -1,0 +1,27 @@
+h1 {
+    text-align: center;
+    margin: 60px;
+    padding: 0;
+    font-size: 50px;
+}
+#courses {
+    display: flex;
+    width: 100%; 
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card{
+    margin: 30px;
+}
+img {
+    height: 200px;
+}
+.card-body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+} 
+.card-title{
+    text-align: center;
+}
+
