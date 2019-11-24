@@ -176,13 +176,13 @@ function buildHoles() {
     for (let i = 0; i < courseData.holes.length; i++) {
         $("#holes").append(`<div class="col-sm holes" id="col_${courseData.holes[i].hole}">${i + 1}</div>`)
         if (i === 8) {
-            $("#holes").append(`<div class="col-sm out">Out</div>`)
+            $("#holes").append(`<div class="col-sm outst">Out</div>`)
         }
         if (i === 17) {
-            $("#holes").append(`<div class="col-sm in">In</div>`)
+            $("#holes").append(`<div class="col-sm inst">In</div>`)
         }
     }
-    $("#holes").append(`<div class="col-sm total">Total</div>`)
+    $("#holes").append(`<div class="col-sm totalst">Total</div>`)
 }
 
 function buildHandicap() {
@@ -202,13 +202,13 @@ function buildHandicap() {
             handicapInTotal += handicapValue;
         }
         if (i === 8) {
-            $("#handicap").append(`<div class="col-sm out">${handicapOutTotal}</div>`)
+            $("#handicap").append(`<div class="col-sm outst">${handicapOutTotal}</div>`)
         }
         if (i === 17) {
-            $("#handicap").append(`<div class="col-sm in">${handicapInTotal}</div>`)
+            $("#handicap").append(`<div class="col-sm inst">${handicapInTotal}</div>`)
         }
     }
-    $("#handicap").append(`<div class="col-sm total">${handicapTotal}</div>`)
+    $("#handicap").append(`<div class="col-sm totalst">${handicapTotal}</div>`)
 }
 
 function buildYardage() {
@@ -228,13 +228,13 @@ function buildYardage() {
             yardageInTotal += yardageValue;
         }
         if (i === 8) {
-            $("#yardage").append(`<div class="col-sm out">${yardageOutTotal}</div>`)
+            $("#yardage").append(`<div class="col-sm outst">${yardageOutTotal}</div>`)
         }
         if (i === 17) {
-            $("#yardage").append(`<div class="col-sm in">${yardageInTotal}</div>`)
+            $("#yardage").append(`<div class="col-sm inst">${yardageInTotal}</div>`)
         }
     }
-    $("#yardage").append(`<div class="col-sm total">${yardageTotal}</div>`)
+    $("#yardage").append(`<div class="col-sm totalst">${yardageTotal}</div>`)
 }
 
 function buildPar() {
@@ -254,13 +254,13 @@ function buildPar() {
             parInTotal += parValue;
         }
         if (i === 8) {
-            $("#par").append(`<div class="col-sm out">${parOutTotal}</div>`)
+            $("#par").append(`<div class="col-sm outst">${parOutTotal}</div>`)
         }
         if (i === 17) {
-            $("#par").append(`<div class="col-sm in">${parInTotal}</div>`)
+            $("#par").append(`<div class="col-sm inst">${parInTotal}</div>`)
         }
     }
-    $("#par").append(`<div class="col-sm total parTotal">${parTotal}</div>`)
+    $("#par").append(`<div class="col-sm totalst parTotal">${parTotal}</div>`)
 }
 
 function buildPlayer() {

@@ -85,15 +85,15 @@ form{
     height: auto;
 }
 
-.out{
+.outst{
     background-color: orange;
 }
 
-.in{
+.inst{
     background-color: orange;
 }
 
-.total{
+.totalst{
     background-color: rgb(26, 26, 56);
     color: whitesmoke;
     margin-right: 5px;
