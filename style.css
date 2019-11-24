@@ -4,7 +4,7 @@ h1 {
     padding: 0;
     font-size: 50px;
 }
-#courses {
+#container {
     display: flex;
     width: 100%; 
     flex-wrap: wrap;

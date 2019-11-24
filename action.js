@@ -21,7 +21,7 @@ let holePar = [];
 let holes = [];
 let courseData = [];
 let teeIndex;
-let playerCount;
+let numPlayers;
 let teeName;
 let nameArray = [];
 let scoreArray = [];
@@ -36,7 +36,7 @@ function getCourses(){
             console.log(mycourses)
            for(let i =0; i < mycourses.courses.length; i++){
             $("#title").html("Select Your Course") 
-            $("#courses").append(
+            $("#container").append(
                `<div class="card" style="width: 18rem;">
                     <img src="${mycourses.courses[i].image}" class="card-img-top">
                     <div class="card-body" value="${mycourses.courses[i].id}">
@@ -73,22 +73,39 @@ function getCourseById(id) {
     xhttp.send();
 }
 
+
 function loadTees() {
     tees = courseData.holes[0].teeBoxes;
-    $("#courses").empty();
+    $("#container").empty();
     for (let i = 0; i < tees.length && i < 4; i++) {
         $("#title").html(`${courseData.name}`)
-        $("#courses").append(
-            `<div class="card text-center course-select">  
-             <div class="card-body">
-             <h5 class="card-title">${tees[i].teeType}</h5>
-             <button class="btn btn-dark text-center" id="${tees.indexOf(tees[i])}" onclick="choosePlayerCount(${tees.indexOf(tees[i])})">Select</button>
-             </div></div>`);
+        $("#container").append(
+            `<div class="card" style="width: 18rem;">
+                <button type="button" id="${tees.indexOf(tees[i])}" onclick="loadNumPlayers(${tees.indexOf(tees[i])})">
+                ${tees[i].teeType}
+                </button>
+            </div>`);
     }
-
 }
 
-
+function loadNumPlayers(id) {
+    teeIndex = id;
+    teeName = tees[id].teeType;
+    $("#container").empty();
+    numPlayers = [1, 2, 3, 4];
+    for (let i = 0; i < numPlayers.length; i++) {
+        $("#title").html(
+            `<div>${courseData.name}</div> 
+            <div>${tees[id].teeType}</div> 
+            <div>How many Players?</div>`)
+        $("#container").append(
+            `<div class="card" style="width: 18rem;">
+                <button type="button" onclick="choosePlayerNames(${numPlayers[i]})">
+                ${numPlayers[i]}
+                </button>
+            </div>`);
+    }
+}
 
 
 
