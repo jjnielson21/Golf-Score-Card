@@ -23,7 +23,6 @@ let courseData = [];
 let teeIndex;
 let numPlayers;
 let teeName;
-let nameArray = [];
 let scoreArray = [];
 
 getCourses();
@@ -96,7 +95,7 @@ function loadNumPlayers(id) {
     for (let i = 0; i < numPlayers.length; i++) {
         $("#title").html(
             `<div>${courseData.name}</div> 
-            <div>${tees[id].teeType}</div> 
+            <div>Tee - ${tees[id].teeType}</div> 
             <div>How many Players?</div>`);
         $("#container").append(
             `<div class="card" style="width: 18rem;">
@@ -113,7 +112,7 @@ function playerNames(players) {
     for (let i = 0; i < numPlayers; i++) {
         $("#title").html(
             `<div>${courseData.name}</div> 
-            <div>${teeName}</div> 
+            <div>Tee - ${teeName}</div> 
             <div>Enter Player Names</div>`);
         $("#container").append(
             `<form onkeypress="return event.keyCode != 13;">           
@@ -123,7 +122,61 @@ function playerNames(players) {
         );
     }
     $("#container").append(
-        `<button type="button" onclick="grabNames()">Go To Score Card</button>
+        `<button type="button" onclick="addNames()">Go To Score Card</button>
         `);
+}
+
+
+function addNames() {
+
+    players = [];
+    let validated = true;
+
+    $(".playerNameInput").each(function () {
+        let value = $(this).val();
+        let nameCheck = players.includes(value);
+        if (value.length === 0) {
+            validated = false;
+            $(this).css('border', '2px solid red');
+            alert("Please add all player names.");
+            return false;
+        }
+        if (nameCheck) {
+            validated = false;
+            $(this).css('border', '2px solid red');
+            alert(`Players cannot have the same name - ${value}`);
+            return false;
+        }
+        else {
+            players.push(new Player(value));
+            
+        }
+    })
+    buildCard();
+    console.log(players);
+    return validated;
+    
+}
+
+function buildCard() {
+    $("#container").empty();
+    $("#title").html(
+        `<div>${courseData.name}</div> 
+        <div>Tee - ${teeName}</div> 
+        `);
+    $("#container").append(
+        `<div class="scorecard-container">
+            <div id="holes"></div>
+            <div id="par"></div>
+            <div id="yardage"></div>
+            <div id="handicap"></div>
+            <div id="play"></div>
+        </div>`);
+    buildHoles();
+    buildPar();
+    buildYardage();
+    buildHandicap();
+    buildPlayer();
+    buildTotalButton();
 }
 
