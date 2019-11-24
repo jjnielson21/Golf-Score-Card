@@ -273,15 +273,15 @@ function buildPlayer() {
 function buildScore(index) {
     let playerIdDiv = "#players" + index;
     for (let i = 0; i < courseData.holes.length; i++) {
-        $(playerIdDiv).append(`<input type="number" tabindex="${i + 2}" onkeyup="appendScores(this)" class="col-sm">`);
+        $(playerIdDiv).append(`<input type="number" tabindex="${i + 2}" onblur="appendScores(this)"  class="col-sm">`);
         if (i === 8) {
-            $(playerIdDiv).append(`<div class="col-sm out"></div>`)
+            $(playerIdDiv).append(`<div class="col-sm outst out"></div>`)
         }
         if (i === 17) {
-            $(playerIdDiv).append(`<div class="col-sm in"></div>`)
+            $(playerIdDiv).append(`<div class="col-sm inst in"></div>`)
         }
     }
-    $(playerIdDiv).append(`<div class="col-sm total"></div>`);
+    $(playerIdDiv).append(`<div class="col-sm totalst total"></div>`);
 }
 
 function buildTotalButton() {
