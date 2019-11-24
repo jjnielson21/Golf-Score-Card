@@ -1,29 +1,14 @@
-  
-class Player {
-  constructor(name) {
-      this.name = name;
-      this.holeScore = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-      this.totalScore = ()=>{return this.holeScore.reduce((a, b) => a + b, 0)};
-      this.outScore = ()=>{return this.holeScore.slice(0,9).reduce((a,b) => a + b, 0)};
-      this.inScore = () =>{return this.holeScore.slice(9, 18).reduce((a, b) => a + b, 0)};
-  }
-}
+let courses;
 let tees;
 let players = [];
-let idPromise;
-let tee;
-let teeList = [];
 let course;
-let holesList =[];
-let holeYards = [];
-let holeCap = []; 
-let holePar = [];
 let holes = [];
 let courseData = [];
-let teeIndex;
+let teeId;
 let numPlayers;
 let teeName;
 let scoreArray = [];
+
 
 getCourses();
 
@@ -34,14 +19,15 @@ function getCourses(){
             mycourses = JSON.parse(this.responseText);
             console.log(mycourses)
            for(let i =0; i < mycourses.courses.length; i++){
+            courses = mycourses.courses[i]
             $("#title").html("Select Your Course") 
             $("#container").append(
                `<div class="card" style="width: 18rem;">
-                    <img src="${mycourses.courses[i].image}" class="card-img-top">
-                    <div class="card-body" value="${mycourses.courses[i].id}">
-                        <h5 class="card-title">${mycourses.courses[i].name}</h5>
+                    <img src="${courses.image}" class="card-img-top">
+                    <div class="card-body" value="${courses.id}">
+                        <h5 class="card-title">${courses.name}</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <button type="button" onclick="getCourseById(${mycourses.courses[i].id})">
+                        <button type="button" onclick="getCourseById(${courses.id})">
                             Select Course
                         </button>
                     </div>
@@ -88,7 +74,7 @@ function loadTees() {
 }
 
 function loadNumPlayers(id) {
-    teeIndex = id;
+    teeId = id;
     teeName = tees[id].teeType;
     $("#container").empty();
     numPlayers = [1, 2, 3, 4];
@@ -148,7 +134,7 @@ function addNames() {
             return false;
         }
         else {
-            players.push(new Player(value));
+            players.push(value);
             
         }
     })
@@ -170,7 +156,7 @@ function buildCard() {
             <div id="par"></div>
             <div id="yardage"></div>
             <div id="handicap"></div>
-            <div id="play"></div>
+            <div id="players"></div>
         </div>`);
     buildHoles();
     buildPar();
@@ -178,5 +164,196 @@ function buildCard() {
     buildHandicap();
     buildPlayer();
     buildTotalButton();
+}
+
+function buildHoles() {
+    $("#holes").append(`<div class="title border-top border-dark">Hole</div>`);
+    for (let i = 0; i < courseData.holes.length; i++) {
+        $("#holes").append(`<div class="col-sm bg-info border border-dark" id="col_${courseData.holes[i].hole}">${i + 1}</div>`)
+        if (i === 8) {
+            $("#holes").append(`<div class="col-sm bg-secondary text-white">Out</div>`)
+        }
+        if (i === 17) {
+            $("#holes").append(`<div class="col-sm border-right border-white bg-secondary text-white">In</div>`)
+        }
+    }
+    $("#holes").append(`<div class="col-sm bg-dark text-white">Total</div>`)
+}
+
+function buildPar() {
+    let parTotal = 0;
+    let parOutTotal = 0;
+    let parInTotal = 0;
+    $("#par").append(`<div class="title">Par</div>`);
+    for (let i = 0; i < courseData.holes.length; i++) {
+        let parValue = courseData.holes[i].teeBoxes[teeId].par;
+        parTotal += parValue;
+        $("#par").append(`<div class="col-sm bgColor border border-dark" id="par_${i}">${parValue}</div>`);
+
+        if (i < 9) {
+            parOutTotal += parValue;
+        }
+        else {
+            parInTotal += parValue;
+        }
+        if (i === 8) {
+            $("#par").append(`<div class="col-sm border-top border-white bg-secondary text-white">${parOutTotal}</div>`)
+        }
+        if (i === 17) {
+            $("#par").append(`<div class="col-sm border-top border-right border-white bg-secondary text-white">${parInTotal}</div>`)
+        }
+    }
+    $("#par").append(`<div class="col-sm border-top border-white bg-dark text-white parTotal">${parTotal}</div>`)
+}
+
+function buildYardage() {
+    let yardageTotal = 0;
+    let yardageOutTotal = 0;
+    let yardageInTotal = 0;
+    $("#yardage").append(`<div class="title">Yardage</div>`);
+    for (let i = 0; i < courseData.holes.length; i++) {
+        let yardageValue = courseData.holes[i].teeBoxes[teeId].yards;
+        yardageTotal += yardageValue;
+        $("#yardage").append(`<div class="col-sm bgColor border border-dark" id="yardage_${i}">${yardageValue}</div>`);
+
+        if (i < 9) {
+            yardageOutTotal += yardageValue;
+        }
+        else {
+            yardageInTotal += yardageValue;
+        }
+        if (i === 8) {
+            $("#yardage").append(`<div class="col-sm border-top border-white bg-secondary text-white">${yardageOutTotal}</div>`)
+        }
+        if (i === 17) {
+            $("#yardage").append(`<div class="col-sm border-top border-right border-white bg-secondary text-white">${yardageInTotal}</div>`)
+        }
+    }
+    $("#yardage").append(`<div class="col-sm bg-dark  border-top border-white text-white">${yardageTotal}</div>`)
+}
+
+function buildHandicap() {
+    let handicapTotal = 0;
+    let handicapOutTotal = 0;
+    let handicapInTotal = 0;
+    $("#handicap").append(`<div class="title">Handicap</div>`);
+    for (let i = 0; i < courseData.holes.length; i++) {
+        let handicapValue = courseData.holes[i].teeBoxes[teeId].hcp;
+        handicapTotal += handicapValue;
+        $("#handicap").append(`<div class="col-sm bgColor border border-dark" id="handicap_${i}">${handicapValue}</div>`);
+
+        if (i < 9) {
+            handicapOutTotal += handicapValue;
+        }
+        else {
+            handicapInTotal += handicapValue;
+        }
+        if (i === 8) {
+            $("#handicap").append(`<div class="col-sm border-top border-white bg-secondary text-white">${handicapOutTotal}</div>`)
+        }
+        if (i === 17) {
+            $("#handicap").append(`<div class="col-sm border-top border-right border-white bg-secondary text-white">${handicapInTotal}</div>`)
+        }
+    }
+    $("#handicap").append(`<div class="col-sm bg-dark border-top border-white text-white">${handicapTotal}</div>`)
+}
+
+function buildPlayer() {
+    for (let i = 0; i < players.length; i++) {
+        $("#players").append(`<div id="players${i}" class="player-container"><div class="title playerTitle">${players[i]}</div></div>`);
+        buildScore(i);
+    }
+}
+
+function buildScore(index) {
+    let playerIdDiv = "#players" + index;
+    for (let i = 0; i < courseData.holes.length; i++) {
+        $(playerIdDiv).append(`<input type="number" tabindex="${i + 2}" onkeyup="appendScores(this)" class="col-sm border border-dark">`);
+        if (i === 8) {
+            $(playerIdDiv).append(`<div class="col-sm out border-top border-white bg-secondary text-white"></div>`)
+        }
+        if (i === 17) {
+            $(playerIdDiv).append(`<div class="col-sm in border-top border-right border-white bg-secondary text-white"></div>`)
+        }
+    }
+    $(playerIdDiv).append(`<div class="col-sm total border-top border-white bg-dark text-white"></div>`);
+}
+
+function buildTotalButton() {
+    $(".scorecard-container").append(`<button type="button" class="btn btn-sm btn-dark finalBtn" data-toggle="modal" onclick="calculateTotal()">Finalize Match</button>`)
+
+}
+
+function appendScores(event) {
+    let inputId = "#" + ($(event).parent().attr("id")) + " :input";
+    let totalId = "#" + ($(event).parent().attr("id")) + " .total";
+    let outId = "#" + ($(event).parent().attr("id")) + " .out";
+    let inId = "#" + ($(event).parent().attr("id")) + " .in";
+    let total = 0;
+    let outValue = 0;
+    let inValue = 0;
+
+    $(inputId).each(function (index, testVal) {
+        let value = Number($(this).val());
+
+        total += value;
+        if (index <= 8) {
+            let currentOutValue = Number($(this).val());
+            outValue += currentOutValue;
+            $(outId).text(outValue);
+        }
+    });
+    $(totalId).text(total);
+    inValue = total - outValue;
+    $(inId).text(inValue);
+}
+
+function calculateTotal() {
+    scoreArray = [];
+    let totalPlayerScore = 0;
+    let parTotal = $(".parTotal").text();
+    $(".total").each(function (index) {
+        let value = $(this).text();
+        console.log("value:", value)
+        scoreArray.push(value);
+    })
+    console.log(scoreArray);
+
+    $("#modal-box").modal('show');
+    $("#modal-title").html(`Final Scores`);
+    $("#modal-container").empty();
+
+    for (let i = 0; i < players.length; i++) {
+        totalPlayerScore = scoreArray[i] - parTotal;
+        
+        
+        if (totalPlayerScore >= 0 && totalPlayerScore < 5) {
+            $("#modal-container").append(
+                `<div class="card text-center course-select finalScoreCard">  
+             <div class="card-body">
+             <h5 class="card-title">${players[i]}</h5>
+             
+             <p class="card-text">Your score is ${totalPlayerScore} over par, better luck next time!</p>
+             </div></div>`);
+        }
+        if (totalPlayerScore >= 5) {
+            $("#modal-container").append(
+                `<div class="card text-center course-select finalScoreCard">  
+             <div class="card-body">
+             <h5 class="card-title">${players[i]}</h5>
+             
+             <p class="card-text">Your score is ${totalPlayerScore} over par, you may need some more practice!</p>
+             </div></div>`);
+        }
+        if (totalPlayerScore < 0) {
+            $("#modal-container").append(
+                `<div class="card text-center course-select finalScoreCard">  
+             <div class="card-body">
+             <h5 class="card-title">${players[i]}</h5>
+             
+             <p class="card-text">Your score is ${totalPlayerScore} under par, great job!</p>
+             </div></div>`);
+        }
+    }
 }
 

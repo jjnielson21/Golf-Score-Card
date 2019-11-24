@@ -34,4 +34,57 @@ form{
     padding: 50px;
     
 }
+.scorecard-container {
+    background-color: transparent;
+    /*border: 1px solid black;*/
+    position: absolute;
+    top: 40%;
+    width: auto;
+    height: auto;
+}
 
+#title-bar{
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    background-color: darkolivegreen;
+    border: 1px solid black;
+}
+
+#par {
+    display: flex;
+}
+
+#yardage {
+    display: flex;
+
+}
+
+#handicap {
+    display: flex;
+}
+
+#holes {
+    display: flex;
+}
+
+.title {
+    font-weight: bold;
+    background-color: white;
+    width: 105px;
+    padding-left: 3px;
+}
+
+
+.col-sm {
+    text-align: center;
+    padding: unset;
+}
+
+.player-container {
+    display: flex;
+}
+
+[contentEditable=true]:empty:not(:focus):before {
+    content: attr(data-text)
+}
