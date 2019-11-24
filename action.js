@@ -97,16 +97,33 @@ function loadNumPlayers(id) {
         $("#title").html(
             `<div>${courseData.name}</div> 
             <div>${tees[id].teeType}</div> 
-            <div>How many Players?</div>`)
+            <div>How many Players?</div>`);
         $("#container").append(
             `<div class="card" style="width: 18rem;">
-                <button type="button" onclick="choosePlayerNames(${numPlayers[i]})">
+                <button type="button" onclick="playerNames(${numPlayers[i]})">
                 ${numPlayers[i]}
                 </button>
             </div>`);
     }
 }
 
-
-
+function playerNames(players) {
+    numPlayers = players;
+    $("#container").empty();
+    for (let i = 0; i < numPlayers; i++) {
+        $("#title").html(
+            `<div>${courseData.name}</div> 
+            <div>${teeName}</div> 
+            <div>Enter Player Names</div>`);
+        $("#container").append(
+            `<form onkeypress="return event.keyCode != 13;">           
+            <input type="text" class="playerNameInput" id="playerName${i+1}" placeholder="Player ${i+1}">
+            </form>
+            `
+        );
+    }
+    $("#container").append(
+        `<button type="button" onclick="grabNames()">Go To Score Card</button>
+        `);
+}
 
