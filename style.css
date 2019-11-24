@@ -4,87 +4,158 @@ h1 {
     padding: 0;
     font-size: 50px;
 }
+
 #container {
     display: flex;
     width: 100%; 
     flex-wrap: wrap;
     justify-content: center;
 }
+
 .card{
     margin: 30px;
 }
+
 img {
     height: 200px;
 }
+
 .card-body{
     display: flex;
     justify-content: center;
     flex-direction: column;
 } 
+
 .card-title{
     text-align: center;
 }
+
 a{
     text-align: center;
 }
-button{
-    background-color: greenyellow;
+
+#courseBtn{
+    background-color: rgb(12, 194, 28);
 }
+
+.courseName{
+    font-size: 70px;
+    color:  rgb(12, 194, 28);
+}
+
+.teebtn{
+    font-size: 50px;
+    background-color: rgb(26, 26, 56);
+    color: whitesmoke;
+}
+.question{
+    font-size: 70px;
+}
+
+.teeName{
+    font-size: 50px;
+    color:  rgb(26, 26, 56);
+}
+
 form{
     padding: 50px;
-    
+    font-size: 30px;
 }
-.scorecard-container {
+
+.buildbtn{
+    margin: 50px;
+    height: 50px;
+    background-color: rgb(12, 194, 28);
+}
+
+.title {
+    font-weight: bold;
+    background-color: white;
+    width: 100px;
+    margin-left: 5px;
+    padding-left: 5px;
+    border: 2px solid black;
+}
+
+.scorecard {
     background-color: transparent;
-    /*border: 1px solid black;*/
     position: absolute;
     top: 40%;
     width: auto;
     height: auto;
 }
 
-#title-bar{
-    text-align: center;
-    font-weight: bold;
-    font-size: 30px;
-    background-color: darkolivegreen;
-    border: 1px solid black;
+.out{
+    background-color: orange;
 }
 
-#par {
-    display: flex;
+.in{
+    background-color: orange;
 }
 
-#yardage {
-    display: flex;
-
-}
-
-#handicap {
-    display: flex;
+.total{
+    background-color: rgb(26, 26, 56);
+    color: whitesmoke;
+    margin-right: 5px;
 }
 
 #holes {
     display: flex;
 }
 
-.title {
-    font-weight: bold;
-    background-color: white;
-    width: 105px;
-    padding-left: 3px;
+.holes{
+    background-color:  rgb(26, 26, 56);
+    color: whitesmoke;
 }
 
+#handicap {
+    display: flex;
+}
+
+#yardage {
+    display: flex;
+}
+
+#par {
+    display: flex;
+}
 
 .col-sm {
     text-align: center;
     padding: unset;
+    border: 1px solid black;
 }
 
 .player-container {
     display: flex;
+   
+}
+.playerTitle{
+    font-weight: bold;
+    width: 100px;
+    margin-left: 5px;
+    padding-left: 5px;
+    border: 2px solid black;
+    background-color: rgb(12, 194, 28);
+}
+#final{
+    display: flex;
+    justify-content: center;
+}
+
+.finalbtn{
+    margin: 50px;
+    height: 50px;
+    background-color: rgb(26, 26, 56);
+    color: whitesmoke;
+    align-content: center;
 }
 
 [contentEditable=true]:empty:not(:focus):before {
     content: attr(data-text)
+}
+#messageBox{
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
