@@ -333,7 +333,7 @@ function calculateTotal() {
                 `<div class="card text-center course-select finalScoreCard">  
                     <div class="card-body">
                         <h5 class="card-title">${players[i]}</h5>
-                        <p class="card-text">Your score is ${totalPlayerScore} over par, better luck next time!</p>
+                        <p class="card-text">You shot ${totalPlayerScore} over par, Your getting close!</p>
                     </div>
                 </div>`);
         }
@@ -342,7 +342,7 @@ function calculateTotal() {
                 `<div class="card text-center course-select finalScoreCard">  
                     <div class="card-body">
                         <h5 class="card-title">${players[i]}</h5>
-                        <p class="card-text">Your score is ${totalPlayerScore} over par, you may need some more practice!</p>
+                        <p class="card-text">You shot ${totalPlayerScore} over par, You need more practic!</p>
                     </div>
                 </div>`);
         }
@@ -351,7 +351,7 @@ function calculateTotal() {
                 `<div class="card text-center course-select finalScoreCard">  
                     <div class="card-body">
                         <h5 class="card-title">${players[i]}</h5>
-                        <p class="card-text">Your score is ${totalPlayerScore} under par, great job!</p>
+                        <p class="card-text">You shot ${totalPlayerScore} under par, Good work!</p>
                     </div>
                 </div>`);
         }
