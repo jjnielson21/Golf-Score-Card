@@ -24,4 +24,10 @@ img {
 .card-title{
     text-align: center;
 }
+a{
+    text-align: center;
+}
+button{
+    background-color: greenyellow;
+}
 

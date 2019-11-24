@@ -1,9 +1,32 @@
-let mycourses;
-let myclass
+  
+class Player {
+  constructor(name) {
+      this.name = name;
+      this.holeScore = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      this.totalScore = ()=>{return this.holeScore.reduce((a, b) => a + b, 0)};
+      this.outScore = ()=>{return this.holeScore.slice(0,9).reduce((a,b) => a + b, 0)};
+      this.inScore = () =>{return this.holeScore.slice(9, 18).reduce((a, b) => a + b, 0)};
+  }
+}
+let tees;
+let players = [];
+let idPromise;
+let tee;
+let teeList = [];
+let course;
+let holesList =[];
+let holeYards = [];
+let holeCap = []; 
+let holePar = [];
+let holes = [];
+let courseData = [];
+let teeIndex;
+let playerCount;
+let teeName;
+let nameArray = [];
+let scoreArray = [];
 
-(function() {
-    getCourses ();
-})();
+getCourses();
 
 function getCourses(){
     let xhttp = new XMLHttpRequest();
@@ -12,73 +35,61 @@ function getCourses(){
             mycourses = JSON.parse(this.responseText);
             console.log(mycourses)
            for(let i =0; i < mycourses.courses.length; i++){
-               $("#courses").append(
+            $("#title").html("Select Your Course") 
+            $("#courses").append(
                `<div class="card" style="width: 18rem;">
                     <img src="${mycourses.courses[i].image}" class="card-img-top">
-                    <div class="card-body">
+                    <div class="card-body" value="${mycourses.courses[i].id}">
                         <h5 class="card-title">${mycourses.courses[i].name}</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        <button type="button" onclick="getCourseById(${mycourses.courses[i].id})">
                             Select Course
                         </button>
                     </div>
-                </div>
-                
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>`);
+                </div>`
+                );
            }
         }
-    }
+    };
     xhttp.open("GET", "https://golf-courses-api.herokuapp.com/courses", true);
     xhttp.send();
 }
 
 
-
-function getCourseInfo(id){
+function getCourseById(id) {
     let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            let myclass = JSON.parse(this.responseText);
-            // console.log(myclass);
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let course = JSON.parse(this.responseText);
+            holes = course.data.holes;
+            courseData = course.data;
+            console.log("Holes:", holes);
+            console.log("Course Data:", courseData);
 
-            // console.log($(el).parent().find(".levels"));
-    
-            for(let l = 0; l < myclass.classes[0].levels.length; l++){
-                // console.log
-            $(el).parent().find(".levels").append(`<div onclick="showclass(${l})">
-                                        <span>${myclass.classes[0].levels[l].type}</span>
-                                        </div>`);
-            }
+            loadTees();
         }
-    }
+    };
     xhttp.open("GET", `https://golf-courses-api.herokuapp.com/courses/${id}`, true);
     xhttp.send();
 }
 
-function showclass(ctype){
-    for(let c = 0; c < myclass.classes.length; c++) {
-        $(".classlist").append(`<div>
-                                    <span>${myclass.classes[c].classname}</span>
-                                    <span>${myclass.classes[c].levels[ctype].teacher}</span>
-                                    <span>${myclass.classes[c].levels[ctype].schedule}</span>
-                                    </div>`);
+function loadTees() {
+    tees = courseData.holes[0].teeBoxes;
+    $("#courses").empty();
+    for (let i = 0; i < tees.length && i < 4; i++) {
+        $("#title").html(`${courseData.name}`)
+        $("#courses").append(
+            `<div class="card text-center course-select">  
+             <div class="card-body">
+             <h5 class="card-title">${tees[i].teeType}</h5>
+             <button class="btn btn-dark text-center" id="${tees.indexOf(tees[i])}" onclick="choosePlayerCount(${tees.indexOf(tees[i])})">Select</button>
+             </div></div>`);
     }
+
 }
+
+
+
+
+
+
