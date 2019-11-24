@@ -17,7 +17,6 @@ function getCourses(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             mycourses = JSON.parse(this.responseText);
-            console.log(mycourses)
            for(let i =0; i < mycourses.courses.length; i++){
             courses = mycourses.courses[i]
             $("#title").html("Select Your Course") 
@@ -48,8 +47,6 @@ function getCourseById(id) {
             let course = JSON.parse(this.responseText);
             holes = course.data.holes;
             courseData = course.data;
-            console.log("Holes:", holes);
-            console.log("Course Data:", courseData);
 
             loadTees();
         }
@@ -142,7 +139,6 @@ function addNames() {
         }
     })
     buildCard();
-    console.log(players);
     return validated;
     
 }
@@ -318,11 +314,8 @@ function calculateTotal() {
     let parTotal = $(".parTotal").text();
     $(".total").each(function (index) {
         let value = $(this).text();
-        console.log("value:", value)
         scoreArray.push(value);
     })
-    console.log(scoreArray);
-
 
     for (let i = 0; i < players.length; i++) {
         totalPlayerScore = scoreArray[i] - parTotal;
